@@ -1,0 +1,242 @@
+<!--
+Program name: patient-form.html
+Author: Muhammad Masood 
+Date created: 02/26/2026
+Date last edited: 02/26/2026
+Version: 1.0
+Description: Patient Registration Form (client-side only) to capture demographic and health-related info.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Patient Registration</title>
+
+  <!-- External CSS only -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- HEADER / BANNER -->
+  <div id="header">
+    <div class="header-left">
+      <img src="logo.png" alt="Clinic Logo" class="logo" />
+      <div>
+        <h1>(MAKE UP A NAME) Medical</h1>
+        <p class="tagline">Patient Registration Form</p>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <p class="today-line">
+        today is:
+        <span id="todayText"></span>
+      </p>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div id="content">
+    <h2>Register a New Patient</h2>
+    <p class="helper-text">Please complete all required fields.</p>
+
+    <!-- NOTE: No method (client-side only). Action goes to Thank You page -->
+    <form action="thankyou.html">
+      <table class="form-table">
+        <tr>
+          <td><label for="firstName">First Name (max 30)</label></td>
+          <td><input type="text" id="firstName" name="firstName" maxlength="30" required /></td>
+
+          <td><label for="middleInitial">Middle Initial (1)</label></td>
+          <td><input type="text" id="middleInitial" name="middleInitial" maxlength="1" /></td>
+        </tr>
+
+        <tr>
+          <td><label for="lastName">Last Name (max 30)</label></td>
+          <td><input type="text" id="lastName" name="lastName" maxlength="30" required /></td>
+
+          <td><label for="dob">Date of Birth (MM/DD/YYYY)</label></td>
+          <td>
+            <input
+              type="text"
+              id="dob"
+              name="dob"
+              placeholder="MM/DD/YYYY"
+              pattern="(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/(19|20)\d\d"
+              required
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="ssn">Social Security (obscured)</label></td>
+          <td>
+            <input
+              type="password"
+              id="ssn"
+              name="ssn"
+              minlength="9"
+              maxlength="11"
+              placeholder="###-##-####"
+              required
+            />
+          </td>
+
+          <td><label for="email">Email</label></td>
+          <td><input type="email" id="email" name="email" placeholder="name@domain.com" required /></td>
+        </tr>
+
+        <tr>
+          <td><label for="address1">Address Line 1 (max 30)</label></td>
+          <td><input type="text" id="address1" name="address1" maxlength="30" required /></td>
+
+          <td><label for="address2">Address Line 2 (max 30)</label></td>
+          <td><input type="text" id="address2" name="address2" maxlength="30" /></td>
+        </tr>
+
+        <tr>
+          <td><label for="city">City (max 30)</label></td>
+          <td><input type="text" id="city" name="city" maxlength="30" required /></td>
+
+          <td><label for="state">State</label></td>
+          <td>
+            <select id="state" name="state" required>
+              <option value="">Select a state</option>
+              <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
+              <option>CO</option><option>CT</option><option>DE</option><option>DC</option><option>FL</option>
+              <option>GA</option><option>HI</option><option>ID</option><option>IL</option><option>IN</option>
+              <option>IA</option><option>KS</option><option>KY</option><option>LA</option><option>ME</option>
+              <option>MD</option><option>MA</option><option>MI</option><option>MN</option><option>MS</option>
+              <option>MO</option><option>MT</option><option>NE</option><option>NV</option><option>NH</option>
+              <option>NJ</option><option>NM</option><option>NY</option><option>NC</option><option>ND</option>
+              <option>OH</option><option>OK</option><option>OR</option><option>PA</option><option>PR</option>
+              <option>RI</option><option>SC</option><option>SD</option><option>TN</option><option>TX</option>
+              <option>UT</option><option>VT</option><option>VA</option><option>WA</option><option>WV</option>
+              <option>WI</option><option>WY</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="zip">Zip Code (5 to 10 digits)</label></td>
+          <td>
+            <!-- NOT a number type -->
+            <input type="text" id="zip" name="zip" pattern="\d{5}(-\d{4})?|\d{5,10}" placeholder="77005 or 77005-1234" required />
+          </td>
+
+          <td><label for="phone">Phone (optional)</label></td>
+          <td>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="(###) ###-####"
+              pattern="\(\d{3}\)\s\d{3}-\d{4}"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="userId">Desired User ID (max 20)</label></td>
+          <td><input type="text" id="userId" name="userId" maxlength="20" required /></td>
+
+          <td><label for="password">Password</label></td>
+          <td><input type="password" id="password" name="password" required /></td>
+        </tr>
+
+        <tr>
+          <td><label for="password2">Re-enter Password</label></td>
+          <td><input type="password" id="password2" name="password2" required /></td>
+
+          <td><label for="healthScore">Health (1 to 10)</label></td>
+          <td>
+            <input type="range" id="healthScore" name="healthScore" min="1" max="10" value="5" />
+            <span class="range-note">1 (low) to 10 (great)</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td><label for="symptoms">Describe current symptoms</label></td>
+          <td colspan="3">
+            <textarea
+              id="symptoms"
+              name="symptoms"
+              rows="3"
+              cols="50"
+              minlength="3"
+              placeholder="Write a short description of what you're feeling."
+              required
+            ></textarea>
+          </td>
+        </tr>
+      </table>
+
+      <!-- CHECKBOXES (5+) -->
+      <fieldset class="section">
+        <legend>Check all that apply (medical history)</legend>
+
+        <label><input type="checkbox" name="history" value="chickenpox" /> Chicken Pox</label>
+        <label><input type="checkbox" name="history" value="measles" /> Measles</label>
+        <label><input type="checkbox" name="history" value="covid19" /> Covid-19</label>
+        <label><input type="checkbox" name="history" value="smallpox" /> Small Pox</label>
+        <label><input type="checkbox" name="history" value="tetanus" /> Tetanus</label>
+      </fieldset>
+
+      <!-- RADIO SETS (3+) -->
+      <fieldset class="section">
+        <legend>Gender</legend>
+        <label><input type="radio" name="gender" value="male" required /> Male</label>
+        <label><input type="radio" name="gender" value="female" /> Female</label>
+        <label><input type="radio" name="gender" value="other" /> Other</label>
+      </fieldset>
+
+      <fieldset class="section">
+        <legend>Have you been vaccinated?</legend>
+        <label><input type="radio" name="vaccinated" value="yes" required /> Yes</label>
+        <label><input type="radio" name="vaccinated" value="no" /> No</label>
+      </fieldset>
+
+      <fieldset class="section">
+        <legend>Do you have insurance?</legend>
+        <label><input type="radio" name="insurance" value="yes" required /> Yes</label>
+        <label><input type="radio" name="insurance" value="no" /> No</label>
+      </fieldset>
+
+      <!-- BUTTONS -->
+      <div class="button-row">
+        <input type="reset" value="CLEAR AND START OVER" />
+        <input type="submit" value="Submit" />
+      </div>
+    </form>
+  </div>
+
+  <!-- FOOTER -->
+  <div id="footer">
+    <div class="footer-left">
+      <strong>WeRDocs Medical</strong><br />
+      PO BOX 18881<br />
+      Sugar Land TX 77496
+    </div>
+
+    <div class="footer-mid">
+      <a href="#" class="footer-link">CONTACT US</a>
+      <div class="footer-note">(link can be wired later)</div>
+    </div>
+
+    <div class="footer-right">
+      <a href="#" class="footer-link">FB</a>
+      <a href="#" class="footer-link">Twitter</a>
+      <a href="#" class="footer-link">Other</a>
+    </div>
+  </div>
+
+  <!-- Inline JS ONLY for dynamic date -->
+  <script>
+    const d = new Date();
+    const opts = { weekday: "long", year: "numeric", month: "short", day: "numeric" };
+    document.getElementById("todayText").textContent = d.toLocaleDateString("en-US", opts);
+  </script>
+</body>
+</html>
