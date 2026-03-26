@@ -60,13 +60,12 @@ Description: Patient Registration Form (client-side only) to capture demographic
           <td><label for="dob">Date of Birth (MM/DD/YYYY)</label></td>
           <td>
             <input
-              type="text"
-              id="dob"
-              name="dob"
-              placeholder="MM/DD/YYYY"
-              pattern="(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/(19|20)\d\d"
-              required
-            />
+  type="date"
+  id="dob"
+  name="dob"
+  required
+  title="Date cannot be in the future or more than 120 years ago"
+/>
           </td>
         </tr>
 
