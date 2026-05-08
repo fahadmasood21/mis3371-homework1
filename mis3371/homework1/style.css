@@ -234,3 +234,28 @@ textarea {
   color: #4a4a4a;
   margin-top: 6px;
 }
+.welcome-message {
+  margin: 6px 0 0 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.info-frame {
+  width: 100%;
+  height: 95px;
+  border: 1px solid #d5dde7;
+  border-radius: 10px;
+  margin: 12px 0;
+  background: #fafcff;
+}
+
+#header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+#notUserBox {
+  margin-top: 10px;
+}
