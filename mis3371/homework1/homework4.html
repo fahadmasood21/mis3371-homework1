@@ -12,7 +12,7 @@ Description: Patient Registration Form with on-the-fly JavaScript validation.
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Patient Registration - Homework 3</title>
+  <title>Patient Registration - Homework 4</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -27,12 +27,14 @@ Description: Patient Registration Form with on-the-fly JavaScript validation.
 
     <div class="header-right">
       <p class="today-line">Today is: <span id="todayText"></span></p>
+      <p id="welcomeMessage" class="welcome-message">Welcome New User</p>
     </div>
   </div>
 
   <div id="content">
     <h2>Register a New Patient</h2>
     <p class="helper-text">Please complete all required fields. Errors will appear as you type or leave a field.</p>
+    <iframe src="iframe-info.html" class="info-frame" title="Patient Form Information"></iframe>
 
     <form id="registrationForm" action="thankyou.html" novalidate>
       <table class="form-table">
@@ -132,8 +134,8 @@ Description: Patient Registration Form with on-the-fly JavaScript validation.
           </td>
           <td>
             <select id="state" name="state" title="Select a state.">
-              <option value="">Select a state</option>
-            </select>
+  <option value="">Loading states...</option>
+</select>
             <div class="error" id="stateError"></div>
           </td>
         </tr>
@@ -244,6 +246,20 @@ Description: Patient Registration Form with on-the-fly JavaScript validation.
         <div class="error" id="insuranceError"></div>
       </fieldset>
 
+      <fieldset class="section">
+  <legend>Remember Me</legend>
+  <label>
+    <input type="checkbox" id="rememberMe" name="rememberMe" />
+    Remember me on this computer
+  </label>
+
+  <div id="notUserBox" style="display:none;">
+    <label>
+      <input type="checkbox" id="notUser" name="notUser" />
+      Not me, start as a new user
+    </label>
+  </div>
+</fieldset>
       <div class="button-row">
         <input type="reset" value="CLEAR AND START OVER" id="clearBtn" />
         <input type="button" value="VALIDATE" id="validateBtn" />
@@ -276,7 +292,6 @@ Description: Patient Registration Form with on-the-fly JavaScript validation.
     </div>
   </div>
 
-  <script src="states.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
