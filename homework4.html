@@ -1,0 +1,282 @@
+<!--
+Program name: homework3.html
+Author: Muhammad Masood
+Date created: 04/18/2026
+Date last edited: 04/18/2026
+Version: 3.1
+Description: Patient Registration Form with on-the-fly JavaScript validation.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Patient Registration - Homework 3</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="header">
+    <div class="header-left">
+      <img src="logo.png" alt="Clinic Logo" class="logo" />
+      <div>
+        <h1>PrimeCareMedical</h1>
+        <p class="tagline">Patient Registration Form</p>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <p class="today-line">Today is: <span id="todayText"></span></p>
+    </div>
+  </div>
+
+  <div id="content">
+    <h2>Register a New Patient</h2>
+    <p class="helper-text">Please complete all required fields. Errors will appear as you type or leave a field.</p>
+
+    <form id="registrationForm" action="thankyou.html" novalidate>
+      <table class="form-table">
+        <tr>
+          <td>
+            <label for="firstName">First Name</label>
+            <div class="prompt-text">1 to 30 characters. Letters, apostrophes, and dashes only.</div>
+          </td>
+          <td>
+            <input type="text" id="firstName" name="firstName" maxlength="30" title="Enter 1 to 30 letters, apostrophes, or dashes only." />
+            <div class="error" id="firstNameError"></div>
+          </td>
+
+          <td>
+            <label for="middleInitial">Middle Initial</label>
+            <div class="prompt-text">Optional. One letter only.</div>
+          </td>
+          <td>
+            <input type="text" id="middleInitial" name="middleInitial" maxlength="1" title="Optional. Enter one letter only." />
+            <div class="error" id="middleInitialError"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label for="lastName">Last Name</label>
+            <div class="prompt-text">1 to 30 characters. Letters, apostrophes, and dashes only.</div>
+          </td>
+          <td>
+            <input type="text" id="lastName" name="lastName" maxlength="30" title="Enter 1 to 30 letters, apostrophes, or dashes only." />
+            <div class="error" id="lastNameError"></div>
+          </td>
+
+          <td>
+            <label for="dob">Date of Birth</label>
+            <div class="prompt-text">Must not be in the future or more than 120 years ago.</div>
+          </td>
+          <td>
+            <input type="date" id="dob" name="dob" title="Select a valid date of birth." />
+            <div class="error" id="dobError"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label for="ssn">Social Security Number</label>
+            <div class="prompt-text">Required. Enter 9 digits. It will format as 123-45-6789.</div>
+          </td>
+          <td>
+            <input type="password" id="ssn" name="ssn" maxlength="11" placeholder="123-45-6789" title="Enter 9 digits for the Social Security Number." />
+            <div class="error" id="ssnError"></div>
+          </td>
+
+          <td>
+            <label for="email">Email Address</label>
+            <div class="prompt-text">Must be in the format name@domain.tld.</div>
+          </td>
+          <td>
+            <input type="text" id="email" name="email" placeholder="name@domain.com" title="Enter a valid email address." />
+            <div class="error" id="emailError"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label for="address1">Address Line 1</label>
+            <div class="prompt-text">Required. 2 to 30 characters.</div>
+          </td>
+          <td>
+            <input type="text" id="address1" name="address1" maxlength="30" title="Enter 2 to 30 characters." />
+            <div class="error" id="address1Error"></div>
+          </td>
+
+          <td>
+            <label for="address2">Address Line 2</label>
+            <div class="prompt-text">Optional. If entered, 2 to 30 characters.</div>
+          </td>
+          <td>
+            <input type="text" id="address2" name="address2" maxlength="30" title="Optional. Enter 2 to 30 characters if used." />
+            <div class="error" id="address2Error"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label for="city">City</label>
+            <div class="prompt-text">Required. 2 to 30 characters.</div>
+          </td>
+          <td>
+            <input type="text" id="city" name="city" maxlength="30" title="Enter a city name using letters, spaces, apostrophes, periods, or dashes." />
+            <div class="error" id="cityError"></div>
+          </td>
+
+          <td>
+            <label for="state">State</label>
+            <div class="prompt-text">Choose a state, DC, or PR.</div>
+          </td>
+          <td>
+            <select id="state" name="state" title="Select a state.">
+              <option value="">Select a state</option>
+            </select>
+            <div class="error" id="stateError"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label for="zip">Zip Code</label>
+            <div class="prompt-text">Required. Exactly 5 digits.</div>
+          </td>
+          <td>
+            <input type="text" id="zip" name="zip" maxlength="5" placeholder="77005" title="Enter a 5-digit ZIP code." />
+            <div class="error" id="zipError"></div>
+          </td>
+
+          <td>
+            <label for="phone">Phone Number</label>
+            <div class="prompt-text">Optional. Format: 123-456-7890</div>
+          </td>
+          <td>
+            <input type="text" id="phone" name="phone" maxlength="12" placeholder="123-456-7890" title="Optional. Enter a phone number in the format 123-456-7890." />
+            <div class="error" id="phoneError"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label for="userId">Desired User ID</label>
+            <div class="prompt-text">5 to 20 characters. Cannot start with a number.</div>
+          </td>
+          <td>
+            <input type="text" id="userId" name="userId" maxlength="20" title="User ID must start with a letter and may contain letters, numbers, dashes, and underscores." />
+            <div class="error" id="userIdError"></div>
+          </td>
+
+          <td>
+            <label for="password">Password</label>
+            <div class="prompt-text">At least 8 characters, with uppercase, lowercase, and a digit.</div>
+          </td>
+          <td>
+            <input type="password" id="password" name="password" maxlength="30" title="Password must be at least 8 characters and include uppercase, lowercase, and a digit." />
+            <div class="error" id="passwordError"></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label for="password2">Re-enter Password</label>
+            <div class="prompt-text">Must match the password exactly.</div>
+          </td>
+          <td>
+            <input type="password" id="password2" name="password2" maxlength="30" title="Re-enter the same password." />
+            <div class="error" id="password2Error"></div>
+          </td>
+
+          <td>
+            <label for="healthScore">Desired Health Score</label>
+            <div class="prompt-text">Slide to choose a value from 1 to 10.</div>
+          </td>
+          <td>
+            <div class="range-wrap">
+              <input type="range" id="healthScore" name="healthScore" min="1" max="10" value="5" />
+              <span id="healthValue">5</span>
+            </div>
+            <div class="range-note">1 = low, 10 = great</div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <label for="symptoms">Describe Current Symptoms</label>
+            <div class="prompt-text">Please write at least 3 characters.</div>
+          </td>
+          <td colspan="3">
+            <textarea id="symptoms" name="symptoms" rows="3" cols="50" placeholder="Write a short description of what you're feeling." title="Describe your symptoms in at least 3 characters."></textarea>
+            <div class="error" id="symptomsError"></div>
+          </td>
+        </tr>
+      </table>
+
+      <fieldset class="section">
+        <legend>Check all that apply (medical history)</legend>
+        <label><input type="checkbox" name="history" value="Chicken Pox" /> Chicken Pox</label>
+        <label><input type="checkbox" name="history" value="Measles" /> Measles</label>
+        <label><input type="checkbox" name="history" value="Covid-19" /> Covid-19</label>
+        <label><input type="checkbox" name="history" value="Small Pox" /> Small Pox</label>
+        <label><input type="checkbox" name="history" value="Tetanus" /> Tetanus</label>
+      </fieldset>
+
+      <fieldset class="section">
+        <legend>Gender</legend>
+        <label><input type="radio" name="gender" value="Male" /> Male</label>
+        <label><input type="radio" name="gender" value="Female" /> Female</label>
+        <label><input type="radio" name="gender" value="Other" /> Other</label>
+        <div class="error" id="genderError"></div>
+      </fieldset>
+
+      <fieldset class="section">
+        <legend>Have you been vaccinated?</legend>
+        <label><input type="radio" name="vaccinated" value="Yes" /> Yes</label>
+        <label><input type="radio" name="vaccinated" value="No" /> No</label>
+        <div class="error" id="vaccinatedError"></div>
+      </fieldset>
+
+      <fieldset class="section">
+        <legend>Do you have insurance?</legend>
+        <label><input type="radio" name="insurance" value="Yes" /> Yes</label>
+        <label><input type="radio" name="insurance" value="No" /> No</label>
+        <div class="error" id="insuranceError"></div>
+      </fieldset>
+
+      <div class="button-row">
+        <input type="reset" value="CLEAR AND START OVER" id="clearBtn" />
+        <input type="button" value="VALIDATE" id="validateBtn" />
+        <input type="submit" value="SUBMIT" id="submitBtn" class="hidden-submit" />
+      </div>
+    </form>
+
+    <div id="reviewSection" class="review-box" style="display:none;">
+      <h3>Please Review This Information</h3>
+      <div id="reviewContent"></div>
+    </div>
+  </div>
+
+  <div id="footer">
+    <div class="footer-left">
+      <strong>WeRDocs Medical</strong><br />
+      PO BOX 18881<br />
+      Sugar Land TX 77496
+    </div>
+
+    <div class="footer-mid">
+      <a href="#" class="footer-link">CONTACT US</a>
+      <div class="footer-note">(link can be wired later)</div>
+    </div>
+
+    <div class="footer-right">
+      <a href="#" class="footer-link">FB</a>
+      <a href="#" class="footer-link">Twitter</a>
+      <a href="#" class="footer-link">Other</a>
+    </div>
+  </div>
+
+  <script src="states.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
