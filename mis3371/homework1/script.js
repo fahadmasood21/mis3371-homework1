@@ -1,11 +1,13 @@
 window.onload = function () {
   displayToday();
-  populateStates();
+  loadStatesWithFetch();
   setDobLimits();
   setupSlider();
   setupFieldValidation();
   setupFormatting();
   setupButtons();
+  setupCookies();
+  setupLocalStorage();
   toggleSubmit(false);
 };
 
@@ -15,16 +17,20 @@ function displayToday() {
   document.getElementById("todayText").textContent = d.toLocaleDateString("en-US", opts);
 }
 
-function populateStates() {
+function loadStatesWithFetch() {
   const stateSelect = document.getElementById("state");
-  if (!stateSelect || typeof statesArray === "undefined") return;
+  if (!stateSelect) return;
 
-  statesArray.forEach(function (stateCode) {
-    const option = document.createElement("option");
-    option.value = stateCode;
-    option.textContent = stateCode;
-    stateSelect.appendChild(option);
-  });
+  fetch("states-data.html")
+    .then(function (response) {
+      return response.text();
+    })
+    .then(function (data) {
+      stateSelect.innerHTML = data;
+    })
+    .catch(function () {
+      stateSelect.innerHTML = '<option value="">Unable to load states</option>';
+    });
 }
 
 function setDobLimits() {
@@ -675,5 +681,105 @@ function setupButtons() {
       reviewForm();
       alert("Please fix the errors before submitting.");
     }
+  });
+}
+function setCookie(name, value, days) {
+  const d = new Date();
+  d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+  document.cookie = name + "=" + encodeURIComponent(value) + ";expires=" + d.toUTCString() + ";path=/";
+}
+
+function getCookie(name) {
+  const cname = name + "=";
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const parts = decodedCookie.split(";");
+
+  for (let i = 0; i < parts.length; i++) {
+    let c = parts[i].trim();
+    if (c.indexOf(cname) === 0) {
+      return c.substring(cname.length, c.length);
+    }
+  }
+
+  return "";
+}
+
+function setupCookies() {
+  const firstName = document.getElementById("firstName");
+  const rememberMe = document.getElementById("rememberMe");
+  const welcomeMessage = document.getElementById("welcomeMessage");
+  const notUserBox = document.getElementById("notUserBox");
+  const notUser = document.getElementById("notUser");
+
+  const savedName = getCookie("firstName");
+
+  if (savedName !== "") {
+    welcomeMessage.textContent = "Welcome back, " + savedName;
+    firstName.value = savedName;
+    rememberMe.checked = true;
+    notUserBox.style.display = "block";
+  }
+
+  rememberMe.addEventListener("change", function () {
+    if (rememberMe.checked && firstName.value.trim() !== "") {
+      setCookie("firstName", firstName.value.trim(), 2);
+      welcomeMessage.textContent = "Welcome back, " + firstName.value.trim();
+      notUserBox.style.display = "block";
+    }
+  });
+
+  firstName.addEventListener("blur", function () {
+    if (rememberMe.checked && firstName.value.trim() !== "") {
+      setCookie("firstName", firstName.value.trim(), 2);
+      welcomeMessage.textContent = "Welcome back, " + firstName.value.trim();
+      notUserBox.style.display = "block";
+    }
+  });
+
+  notUser.addEventListener("change", function () {
+    if (notUser.checked) {
+      setCookie("firstName", "", -1);
+      localStorage.clear();
+      document.getElementById("registrationForm").reset();
+      welcomeMessage.textContent = "Welcome New User";
+      notUserBox.style.display = "none";
+      rememberMe.checked = false;
+    }
+  });
+}
+
+function setupLocalStorage() {
+  const fieldsToSave = [
+    "middleInitial",
+    "lastName",
+    "dob",
+    "email",
+    "address1",
+    "address2",
+    "city",
+    "state",
+    "zip",
+    "phone",
+    "userId",
+    "healthScore",
+    "symptoms"
+  ];
+
+  fieldsToSave.forEach(function (id) {
+    const field = document.getElementById(id);
+    if (!field) return;
+
+    const savedValue = localStorage.getItem(id);
+    if (savedValue !== null) {
+      field.value = savedValue;
+    }
+
+    field.addEventListener("input", function () {
+      localStorage.setItem(id, field.value);
+    });
+
+    field.addEventListener("change", function () {
+      localStorage.setItem(id, field.value);
+    });
   });
 }
